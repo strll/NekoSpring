@@ -8,11 +8,11 @@ public class BeanDefinition {
         Bean = bean;
     }
 
-    public void setBean(Class bean) {
+    public void setBeanClass(Class bean) {
         Bean = bean;
     }
 
-    public Class getBean() {
+    public Class getBeanClass() {
         return Bean;
     }
 

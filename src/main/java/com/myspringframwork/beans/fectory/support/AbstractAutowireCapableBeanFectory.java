@@ -8,9 +8,10 @@ public abstract class AbstractAutowireCapableBeanFectory extends AbstractBeanFac
 
     @Override
     protected Object createBean(String beanName, BeanDefinition beanDefinition) throws BeansException {
+        //在创建bean的时候除了返回之外还把这个bean实例放到单例的map中去了
         Object o =null;
         try {
-            Class bean = beanDefinition.getBean();
+            Class bean = beanDefinition.getBeanClass();
              o = bean.newInstance();
         }catch (BeansException | InstantiationException | IllegalAccessException e){
             return new BeansException("");
