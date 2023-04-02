@@ -1,12 +1,13 @@
-package com.myspringframwork.beans.fectory.support;
+package com.myspringframwork.beans.fectory.support.instantiation.Impl;
 
 import com.myspringframwork.beans.BeansException;
 import com.myspringframwork.beans.fectory.config.BeanDefinition;
+import com.myspringframwork.beans.fectory.support.instantiation.InstantiationStrategy;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
-public class SimpleInstantiationStrategy implements InstantiationStrategy{
+public class SimpleInstantiationStrategy implements InstantiationStrategy {
     //JKD µÄÊµÀý»¯
     @Override
     public Object instantiate(BeanDefinition beanDefinition, String beanName, Constructor constructor, Object[] args) {

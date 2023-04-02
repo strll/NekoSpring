@@ -1,4 +1,4 @@
-package com.myspringframwork.beans.fectory.support;
+package com.myspringframwork.beans.fectory.support.beanFactory.impl;
 
 import com.myspringframwork.beans.fectory.config.BeanDefinition;
 import com.myspringframwork.beans.fectory.config.SingletonBeanRegistry;

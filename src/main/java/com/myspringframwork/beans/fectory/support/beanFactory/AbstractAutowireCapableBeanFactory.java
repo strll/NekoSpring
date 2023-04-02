@@ -1,4 +1,4 @@
-package com.myspringframwork.beans.fectory.support;
+package com.myspringframwork.beans.fectory.support.beanFactory;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.myspringframwork.beans.BeansException;
@@ -6,11 +6,12 @@ import com.myspringframwork.beans.PropertyValue;
 import com.myspringframwork.beans.PropertyValues;
 import com.myspringframwork.beans.fectory.config.BeanDefinition;
 import com.myspringframwork.beans.fectory.config.BeanReference;
+import com.myspringframwork.beans.fectory.support.instantiation.Impl.CglibSubclassingInstantiationStrategy;
+import com.myspringframwork.beans.fectory.support.instantiation.InstantiationStrategy;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 
-public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFactory{
+public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFactory {
     //默认使用cglib的方式创建bean对象的实例
     private InstantiationStrategy instantiationStrategy = new CglibSubclassingInstantiationStrategy();
 

@@ -1,4 +1,4 @@
-package com.myspringframwork.beans.fectory.support;
+package com.myspringframwork.beans.fectory.support.instantiation;
 
 import com.myspringframwork.beans.fectory.config.BeanDefinition;
 

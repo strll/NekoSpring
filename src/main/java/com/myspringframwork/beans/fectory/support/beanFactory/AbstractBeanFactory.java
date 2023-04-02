@@ -1,9 +1,10 @@
-package com.myspringframwork.beans.fectory.support;
+package com.myspringframwork.beans.fectory.support.beanFactory;
 
 
 import com.myspringframwork.beans.BeansException;
 import com.myspringframwork.beans.fectory.BeanFectory;
 import com.myspringframwork.beans.fectory.config.BeanDefinition;
+import com.myspringframwork.beans.fectory.support.beanFactory.impl.DefaultSingletonBeanRegistry;
 
 public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry implements BeanFectory {
     @Override

@@ -2,15 +2,24 @@ package test;
 
 import bean.UserDao;
 import bean.UserService;
+import cn.hutool.core.io.IoUtil;
 import com.myspringframwork.beans.PropertyValue;
 import com.myspringframwork.beans.PropertyValues;
+import com.myspringframwork.beans.core.io.Resource;
+import com.myspringframwork.beans.core.io.ResourceLoaderImpl.DefaultResourceLoader;
 import com.myspringframwork.beans.fectory.config.BeanDefinition;
 import com.myspringframwork.beans.fectory.config.BeanReference;
-import com.myspringframwork.beans.fectory.support.DefaultListableBeanFactory;
+import com.myspringframwork.beans.fectory.support.beanFactory.impl.DefaultListableBeanFactory;
+import com.myspringframwork.beans.fectory.support.reader.XMLimpl.XmlBeanDefinitionReader;
+
+import jdk.nashorn.internal.runtime.options.OptionTemplate;
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.NoOp;
+import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
@@ -91,10 +100,60 @@ public class day2 {
     // 5. UserService 获取bean
     UserService userService = (UserService) beanFactory.getBean("userService");
     userService.queryUserInfo();
-
-
-
 }
+
+
+
+//    @Before
+//    public void init() {
+//        DefaultResourceLoader resourceLoader = new DefaultResourceLoader();
+//    }
+
+    @Test
+    public void test_classpath() throws IOException {
+        DefaultResourceLoader resourceLoader = new DefaultResourceLoader();
+        Resource resource = resourceLoader.getResource("classpath:important.properties");
+        InputStream inputStream = resource.getInputStream();
+        String content = IoUtil.readUtf8(inputStream);
+        System.out.println(content);
+    }
+
+    @Test
+    public void test_file() throws IOException {
+        DefaultResourceLoader resourceLoader = new DefaultResourceLoader();
+        Resource resource = resourceLoader.getResource("src/main/resources/important.properties");
+        InputStream inputStream = resource.getInputStream();
+        String content = IoUtil.readUtf8(inputStream);
+        System.out.println(content);
+    }
+
+    @Test
+    public void test_url() throws IOException {
+        DefaultResourceLoader resourceLoader = new DefaultResourceLoader();
+        Resource resource = resourceLoader.getResource("https://github.com/fuzhengwei/small-spring/important.properties");
+        InputStream inputStream = resource.getInputStream();
+        String content = IoUtil.readUtf8(inputStream);
+        System.out.println(content);
+    }
+
+    @Test
+    public void test_xml() {
+        DefaultResourceLoader resourceLoader = new DefaultResourceLoader();
+        // 1.初始化 BeanFactory
+        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+
+        // 2. 读取配置文件&注册Bean
+        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
+        reader.loadBeanDefinitions("classpath:spring.xml");
+
+        // 3. 获取Bean对象调用方法
+        UserService userService = (UserService) beanFactory.getBean("userService", UserService.class);
+        String result = userService.queryUserInfo();
+        System.out.println("测试结果：" + result);
+    }
+
+
+
 
 
 }

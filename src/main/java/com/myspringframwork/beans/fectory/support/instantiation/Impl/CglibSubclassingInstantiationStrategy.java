@@ -1,12 +1,13 @@
-package com.myspringframwork.beans.fectory.support;
+package com.myspringframwork.beans.fectory.support.instantiation.Impl;
 
 import com.myspringframwork.beans.fectory.config.BeanDefinition;
+import com.myspringframwork.beans.fectory.support.instantiation.InstantiationStrategy;
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.NoOp;
 
 import java.lang.reflect.Constructor;
 
-public class CglibSubclassingInstantiationStrategy implements InstantiationStrategy{
+public class CglibSubclassingInstantiationStrategy implements InstantiationStrategy {
     //使用Cglib实例化
     @Override
     public Object instantiate(BeanDefinition beanDefinition, String beanName, Constructor constructor, Object[] args) {
