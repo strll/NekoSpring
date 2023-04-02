@@ -3,7 +3,7 @@ package com.myspringframwork.beans;
 import java.util.ArrayList;
 import java.util.List;
 
-
+//存放这个对象的属性信息的集合
 public class PropertyValues {
 
     private final List<PropertyValue> propertyValueList = new ArrayList<>();

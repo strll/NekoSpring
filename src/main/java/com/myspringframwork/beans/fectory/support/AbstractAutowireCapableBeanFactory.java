@@ -18,14 +18,17 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 
         @Override
     protected Object createBean(String beanName, BeanDefinition beanDefinition) throws BeansException {
-        Object bean=null;
-        try{
-            Class beanClass = beanDefinition.getBeanClass();
-            Object o = beanClass.getDeclaredConstructor().newInstance();
-            return o;
-        }catch (InvocationTargetException|InstantiationException|IllegalAccessException|NoSuchMethodException e) {
-            throw  new BeansException("AbstractAutowireCapableBeanFactory make bean fail",e);
-        }
+            Object bean = null;
+            try {
+                bean = createBeanInstance(beanDefinition, beanName, null);
+                //∏¯beanÃÓ≥‰ Ù–‘
+                applyPropertyValues(beanName, bean, beanDefinition);
+            } catch (Exception e) {
+                throw new BeansException("Instantiation of bean failed", e);
+            }
+
+            registerSingleton(beanName, bean);
+            return bean;
     }
 
     @Override

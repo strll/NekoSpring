@@ -1,6 +1,6 @@
 package com.myspringframwork.beans;
 
-
+//是具体的属性信息 比如说 String age;  这里面的name 就是age  value就是age的数值
 public class PropertyValue {
 
     /** 属性名称 */
