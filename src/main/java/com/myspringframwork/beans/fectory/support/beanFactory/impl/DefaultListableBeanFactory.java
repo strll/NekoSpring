@@ -1,7 +1,9 @@
 package com.myspringframwork.beans.fectory.support.beanFactory.impl;
 
 import com.myspringframwork.beans.BeansException;
+import com.myspringframwork.beans.fectory.ConfigurableListableBeanFactory;
 import com.myspringframwork.beans.fectory.config.BeanDefinition;
+import com.myspringframwork.beans.fectory.config.BeanPostProcessor;
 import com.myspringframwork.beans.fectory.support.beanFactory.AbstractAutowireCapableBeanFactory;
 import com.myspringframwork.beans.fectory.support.beanFactory.BeanDefinitionRegistry;
 
@@ -9,9 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 //ºËÐÄÀà
-public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFactory implements BeanDefinitionRegistry {
-
-
+public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFactory implements BeanDefinitionRegistry, ConfigurableListableBeanFactory {
     private Map<String, BeanDefinition> beanDefinitionMap = new HashMap<>();
 
     @Override
@@ -23,9 +23,22 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
         return beanDefinition;
     }
 
+
     @Override
     public boolean containsBeanDefinition(String beanName) {
         return beanDefinitionMap.containsKey(beanName);
+    }
+
+    @Override
+    public <T> Map<String, T> getBeansOfType(Class<T> type) throws BeansException {
+        Map<String, T> result = new HashMap<>();
+        beanDefinitionMap.forEach((beanName, beanDefinition) -> {
+            Class beanClass = beanDefinition.getBeanClass();
+            if (type.isAssignableFrom(beanClass)) {
+                result.put(beanName, (T) getBean(beanName));
+            }
+        });
+        return result;
     }
 
     @Override
@@ -37,6 +50,11 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
     public void registerBeanDefinition(String beanName, BeanDefinition beanDefinition) {
         beanDefinitionMap.put(beanName,beanDefinition);
     }
+    @Override
+    public void preInstantiateSingletons() throws BeansException {
+        beanDefinitionMap.keySet().forEach(this::getBean);
+    }
+
 
 
 }

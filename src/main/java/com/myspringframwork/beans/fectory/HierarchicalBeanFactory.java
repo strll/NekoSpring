@@ -1,4 +1,4 @@
 package com.myspringframwork.beans.fectory;
 
-public class HierarchicalBeanFactory {
+public interface HierarchicalBeanFactory extends BeanFactory{
 }
