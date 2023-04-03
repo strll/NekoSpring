@@ -9,6 +9,7 @@ import com.myspringframwork.beans.core.io.Resource;
 import com.myspringframwork.beans.core.io.ResourceLoaderImpl.DefaultResourceLoader;
 import com.myspringframwork.beans.fectory.config.BeanDefinition;
 import com.myspringframwork.beans.fectory.config.BeanReference;
+import com.myspringframwork.beans.fectory.context.support.ClassPathXmlApplicationContext;
 import com.myspringframwork.beans.fectory.support.beanFactory.impl.DefaultListableBeanFactory;
 import com.myspringframwork.beans.fectory.support.reader.XMLimpl.XmlBeanDefinitionReader;
 
@@ -153,7 +154,16 @@ public class day2 {
     }
 
 
+    @org.junit.Test
+    public void test_xml1() {
+        // 1.初始化 BeanFactory
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:springPostProcessor.xml");
 
+        // 2. 获取Bean对象调用方法
+        UserService userService = applicationContext.getBean("userService", UserService.class);
+        String result = userService.queryUserInfo();
+        System.out.println("测试结果：" + result);
+    }
 
 
 }

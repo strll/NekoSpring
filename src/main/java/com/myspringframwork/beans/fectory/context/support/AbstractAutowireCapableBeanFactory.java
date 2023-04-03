@@ -1,4 +1,4 @@
-package com.myspringframwork.beans.fectory.support.beanFactory;
+package com.myspringframwork.beans.fectory.context.support;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.myspringframwork.beans.BeansException;
@@ -8,39 +8,24 @@ import com.myspringframwork.beans.fectory.config.AutowireCapableBeanFactory;
 import com.myspringframwork.beans.fectory.config.BeanDefinition;
 import com.myspringframwork.beans.fectory.config.BeanPostProcessor;
 import com.myspringframwork.beans.fectory.config.BeanReference;
+import com.myspringframwork.beans.fectory.support.beanFactory.AbstractBeanFactory;
 import com.myspringframwork.beans.fectory.support.instantiation.Impl.CglibSubclassingInstantiationStrategy;
 import com.myspringframwork.beans.fectory.support.instantiation.InstantiationStrategy;
 
 import java.lang.reflect.Constructor;
 
 public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFactory implements AutowireCapableBeanFactory {
-    //默认使用cglib的方式创建bean对象的实例
     private InstantiationStrategy instantiationStrategy = new CglibSubclassingInstantiationStrategy();
-
-
-
-        @Override
-    protected Object createBean(String beanName, BeanDefinition beanDefinition) throws BeansException {
-            Object bean = null;
-            try {
-                bean = createBeanInstance(beanDefinition, beanName, null);
-                //给bean填充属性
-                applyPropertyValues(beanName, bean, beanDefinition);
-            } catch (Exception e) {
-                throw new BeansException("Instantiation of bean failed", e);
-            }
-
-            registerSingleton(beanName, bean);
-            return bean;
-    }
 
     @Override
     protected Object createBean(String beanName, BeanDefinition beanDefinition, Object[] args) throws BeansException {
         Object bean = null;
         try {
             bean = createBeanInstance(beanDefinition, beanName, args);
-            //给bean填充属性
+            // 给 Bean 填充属性
             applyPropertyValues(beanName, bean, beanDefinition);
+            // 执行 Bean 的初始化方法和 BeanPostProcessor 的前置和后置处理方法
+            bean = initializeBean(beanName, bean, beanDefinition);
         } catch (Exception e) {
             throw new BeansException("Instantiation of bean failed", e);
         }
@@ -48,47 +33,61 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         registerSingleton(beanName, bean);
         return bean;
     }
-    protected Object createBeanInstance(BeanDefinition beanDefinition,String beanName,Object[] args){
-        Constructor constructor=null;
-        Class<?> beanclass=beanDefinition.getBeanClass();
-        Constructor<?>[] declaredConstructors = beanclass.getDeclaredConstructors();//获取所有的构造函数
-        for (Constructor<?> declaredConstructor : declaredConstructors) {
-            if (null!=args&&declaredConstructor.getTypeParameters().length==args.length){
-                constructor=declaredConstructor;
+
+    private Object initializeBean(String beanName, Object bean, BeanDefinition beanDefinition) {
+        // 1. 执行 BeanPostProcessor Before 处理
+        Object wrappedBean = applyBeanPostProcessorsBeforeInitialization(bean, beanName);
+
+        // 待完成内容：invokeInitMethods(beanName, wrappedBean, beanDefinition);
+        invokeInitMethods(beanName, wrappedBean, beanDefinition);
+
+        // 2. 执行 BeanPostProcessor After 处理
+        wrappedBean = applyBeanPostProcessorsAfterInitialization(wrappedBean, beanName);
+        return wrappedBean;
+    }
+
+    private void invokeInitMethods(String beanName, Object wrappedBean, BeanDefinition beanDefinition) {
+
+    }
+
+    private void applyPropertyValues(String beanName, Object bean, BeanDefinition beanDefinition) {
+        try {
+            PropertyValues propertyValues = beanDefinition.getPropertyValues();
+            for (PropertyValue propertyValue : propertyValues.getPropertyValues()) {
+
+                String name = propertyValue.getName();
+                Object value = propertyValue.getValue();
+
+                if (value instanceof BeanReference) {
+                    // A 依赖 B，获取 B 的实例化
+                    BeanReference beanReference = (BeanReference) value;
+                    value = getBean(beanReference.getBeanName());
+                }
+                // 属性填充
+                BeanUtil.setFieldValue(bean, name, value);
+            }
+        } catch (Exception e) {
+            throw new BeansException("Error setting property values：" + beanName);
+        }
+    }
+
+    protected Object createBeanInstance(BeanDefinition beanDefinition, String beanName, Object[] args) {
+        Constructor constructorToUse = null;
+        Class<?> beanClass = beanDefinition.getBeanClass();
+        Constructor<?>[] declaredConstructors = beanClass.getDeclaredConstructors();
+        for (Constructor ctor : declaredConstructors) {
+            if (null != args && ctor.getParameterTypes().length == args.length) {
+                constructorToUse = ctor;
                 break;
             }
         }
-        return getInstantiationStrategy().instantiate(beanDefinition, beanName, constructor, args);
+        return getInstantiationStrategy().instantiate(beanDefinition, beanName, constructorToUse, args);
     }
-protected void applyPropertyValues(String beanName,Object bean,BeanDefinition beanDefinition){
-try {
-    PropertyValues propertyValues = beanDefinition.getPropertyValues();
-    for (PropertyValue propertyValue : propertyValues.getPropertyValues()) {
-        String name = propertyValue.getName();
-        Object obj = propertyValue.getValue();
-        if (obj instanceof  BeanReference) {
-            BeanReference beanReference = (BeanReference) obj;
-            obj= getBean(name, beanReference);
-        }
-        BeanUtil.setFieldValue(bean, name, obj);
-    }
-} catch (Exception e){
-    throw  new BeansException("apply PropertyValues error bean name is ["+beanName+"] error is in  AbstractAutowireCapableBeanFactory",e);
-}
-
-
-
-}
-
-
-
-
-
 
     public InstantiationStrategy getInstantiationStrategy() {
         return instantiationStrategy;
     }
-//可以改变bean对象的实例化使用的工具 只需要实现InstantiationStrategy 接口就可以
+
     public void setInstantiationStrategy(InstantiationStrategy instantiationStrategy) {
         this.instantiationStrategy = instantiationStrategy;
     }
@@ -114,5 +113,4 @@ try {
         }
         return result;
     }
-
 }

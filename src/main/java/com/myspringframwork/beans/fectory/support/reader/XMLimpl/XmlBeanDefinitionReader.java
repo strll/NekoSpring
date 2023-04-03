@@ -73,9 +73,9 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
             Class<?> aClass1 = Class.forName(aClass);
             //定义bean的名字    //优先使用id
             String beanName= StrUtil.isNotEmpty(id)? id :name;
-            //如果都不行的话就把类名小写一下就好
+            //如果bean的名字是空的话就用 class的名字
             if (StrUtil.isEmpty(beanName)){
-                beanName=StrUtil.lowerFirst(beanName);
+                beanName = StrUtil.lowerFirst(aClass1.getSimpleName());
             }
             //定义这个bean
             BeanDefinition beanDefinition = new BeanDefinition(aClass1);

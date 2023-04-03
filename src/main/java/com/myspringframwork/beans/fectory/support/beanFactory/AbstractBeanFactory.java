@@ -42,7 +42,9 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry i
     public <T> T getBean(String name, Class<T> requiredType) throws BeansException {
         return (T) getBean(name);
     }
-
+    public List<BeanPostProcessor> getBeanPostProcessors() {
+        return this.beanPostProcessors;
+    }
 
     protected abstract BeanDefinition getBeanDefinition(String beanName) throws BeansException;
     protected abstract Object createBean(String beanName,BeanDefinition beanDefinition) throws BeansException;
