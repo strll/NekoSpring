@@ -13,10 +13,8 @@ import com.myspringframwork.beans.fectory.context.support.ClassPathXmlApplicatio
 import com.myspringframwork.beans.fectory.support.beanFactory.impl.DefaultListableBeanFactory;
 import com.myspringframwork.beans.fectory.support.reader.XMLimpl.XmlBeanDefinitionReader;
 
-import jdk.nashorn.internal.runtime.options.OptionTemplate;
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.NoOp;
-import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -24,7 +22,7 @@ import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
-public class day2 {
+public class mytest {
     @Test
     public void test1(){
         // 1.≥ı ºªØ BeanFactory

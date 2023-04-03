@@ -12,8 +12,8 @@ import com.myspringframwork.beans.fectory.config.BeanFactoryPostProcessor;
  *
  *
  *
- * ä½œè€…ï¼šDerekYRC https://github.com/DerekYRC/mini-spring
- * @description BeanFactoryPostProcessor å®ä¾‹åŒ– Bean å¯¹è±¡ä¹‹å‰ï¼Œä¿®æ”¹ BeanDefinition å±æ€§
+ * ×÷Õß£ºDerekYRC https://github.com/DerekYRC/mini-spring
+ * @description BeanFactoryPostProcessor ÊµÀı»¯ Bean ¶ÔÏóÖ®Ç°£¬ĞŞ¸Ä BeanDefinition ÊôĞÔ
  * @date 2022/03/10
  *
  *
@@ -26,7 +26,7 @@ public class MyBeanFactoryPostProcessor implements BeanFactoryPostProcessor {
         BeanDefinition beanDefinition = beanFactory.getBeanDefinition("userService");
         PropertyValues propertyValues = beanDefinition.getPropertyValues();
 
-        propertyValues.addPropertyValue(new PropertyValue("company", "æ”¹ä¸ºï¼šå­—èŠ‚è·³åŠ¨"));
+        propertyValues.addPropertyValue(new PropertyValue("company", "¸ÄÎª£º×Ö½ÚÌø¶¯"));
     }
 
 }

@@ -7,9 +7,9 @@ public class UserService {
     private UserDao userDao;
 
     public String queryUserInfo() {
-        System.out.println("这是方法里面的System.out.println 查询用户信息：" + userDao.queryUserName(uId));
-        return "查询用户信息：" + userDao.queryUserName(uId);
+        return userDao.queryUserName(uId) + "," + company + "," + location;
     }
+
 
     public String getuId() {
         return uId;

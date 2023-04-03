@@ -13,8 +13,8 @@ import com.myspringframwork.beans.fectory.config.BeanPostProcessor;
  *
  *
  *
- * ä½œè€…ï¼šDerekYRC https://github.com/DerekYRC/mini-spring
- * @description BeanPostProcessor åœ¨ Bean å¯¹è±¡æ‰§è¡Œåˆå§‹åŒ–æ–¹æ³•å‰åè¿›è¡Œæ‰©å±•
+ * ×÷Õß£ºDerekYRC https://github.com/DerekYRC/mini-spring
+ * @description BeanPostProcessor ÔÚ Bean ¶ÔÏóÖ´ĞĞ³õÊ¼»¯·½·¨Ç°ºó½øĞĞÀ©Õ¹
  * @date 2022/03/10
  *
  *
@@ -25,7 +25,7 @@ public class MyBeanPostProcessor implements BeanPostProcessor {
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
         if ("userService".equals(beanName)) {
             UserService userService = (UserService) bean;
-            userService.setLocation("æ”¹ä¸ºï¼šåŒ—äº¬");
+            userService.setLocation("¸ÄÎª£º±±¾©");
         }
         return bean;
     }
