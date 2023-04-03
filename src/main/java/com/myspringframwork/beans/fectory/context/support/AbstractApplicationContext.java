@@ -14,13 +14,14 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader i
 
     @Override
     public void refresh() throws BeansException {
-        //创建 BeanFactory 加载BeanDefinition
+        //创建 BeanFactory 加载BeanDefinition 主要做了两件事 new一个核心类 读取xml里面的信息 把配置信息放到核心类的那个map中去
+        //核心类是 DefaultListableBeanFactory
         refreshBeanFactory();
-        //获取BeanFactory
+        //获取BeanFactory  这一步是获取上面的加载过bean内容的核心类
         ConfigurableListableBeanFactory beanFactory = getBeanFactory();
-        //获取bean实例之前的前置处理
+        //获取bean实例之前的前置处理  修改核心类里面的BeanDefinition的信息
         invokeBeanFactoryPostProcessors(beanFactory);
-        //bean对象实例化之前注册
+        //bean对象实例化之前注册  暂时没什么实际上的卵用(2023.4.3) 主要是把这个beanfactory删了再放进去
         registerBeanPostProcessors(beanFactory);
         // 实例化单例的bean对象
         beanFactory.preInstantiateSingletons();
@@ -32,6 +33,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader i
     protected abstract ConfigurableListableBeanFactory getBeanFactory();
 
     private void invokeBeanFactoryPostProcessors(ConfigurableListableBeanFactory beanFactory) {
+        //获取前置处理的bean的实例
         Map<String, BeanFactoryPostProcessor> beanFactoryPostProcessorMap = beanFactory.getBeansOfType(BeanFactoryPostProcessor.class);
         for (BeanFactoryPostProcessor beanFactoryPostProcessor : beanFactoryPostProcessorMap.values()) {
             beanFactoryPostProcessor.postProcessBeanFactory(beanFactory);

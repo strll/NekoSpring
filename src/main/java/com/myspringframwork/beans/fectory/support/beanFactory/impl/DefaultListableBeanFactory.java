@@ -10,7 +10,7 @@ import com.myspringframwork.beans.fectory.support.beanFactory.BeanDefinitionRegi
 import java.util.HashMap;
 import java.util.Map;
 
-//核心类
+//核心类  被许多的类使用
 public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFactory implements BeanDefinitionRegistry, ConfigurableListableBeanFactory {
     private Map<String, BeanDefinition> beanDefinitionMap = new HashMap<>();
 

@@ -7,6 +7,7 @@ public abstract class AbstractXmlApplicationContext extends AbstractRefreshableA
 {
     @Override
     protected void loadBeanDefinitions(DefaultListableBeanFactory beanFactory) {
+        // xmlBeanDefinitionReader 用于读取xml里面的bean的定义信息
         XmlBeanDefinitionReader xmlBeanDefinitionReader = new XmlBeanDefinitionReader(beanFactory, this);
         String[] configLocations = getConfigLocations();
         if(null!=configLocations){

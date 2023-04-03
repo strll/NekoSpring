@@ -55,7 +55,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
         }
     }
 
-
+//读取xml里面的配置信息  并将配置信息放到核心类的map中去
     public void  doLoadBeanDefinitions(InputStream inputStream) throws ClassNotFoundException {
         Document document = XmlUtil.readXML(inputStream);
         Element documentElement = document.getDocumentElement();
@@ -99,7 +99,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
             if (getRegistry().containsBeanDefinition(beanName)){
                 throw new BeansException( "beanName["+beanName+"] is not allowed"+ "Exception in XmlBeanDefinitionReader");
             }
-            //把这个放到核心类的那个map中去
+            //把这个放到核心类的那个map中去   DefaultListableBeanFactory是核心类
             getRegistry().registerBeanDefinition(beanName,beanDefinition);
 
         }
