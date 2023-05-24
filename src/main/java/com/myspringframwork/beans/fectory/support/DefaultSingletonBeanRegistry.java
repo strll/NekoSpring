@@ -1,17 +1,25 @@
-package com.myspringframwork.beans.fectory.support.beanFactory.impl;
+package com.myspringframwork.beans.fectory.support;
 
 import com.myspringframwork.beans.BeansException;
-import com.myspringframwork.beans.fectory.config.BeanDefinition;
 import com.myspringframwork.beans.fectory.config.SingletonBeanRegistry;
 import com.myspringframwork.beans.fectory.support.beanFactory.DisposableBean;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
-//定义或者注册bean的单例接口
-public class DefaultSingletonBeanRegistry implements  SingletonBeanRegistry {
+/**
+ *
+ *
+ *
+ * 浣滆�咃細DerekYRC https://github.com/DerekYRC/mini-spring
+ * @description 閫氱敤鐨勬敞鍐岃〃瀹炵幇
+ * @date 2022/03/07
+ *
+ *
+ */
+public class DefaultSingletonBeanRegistry implements SingletonBeanRegistry {
+
     private Map<String, Object> singletonObjects = new HashMap<>();
 
     private final Map<String, DisposableBean> disposableBeans = new HashMap<>();

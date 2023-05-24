@@ -1,7 +1,7 @@
-package com.myspringframwork.beans.core.io.ResourceImpl;
+package com.myspringframwork.core.io.ResourceImpl;
 
 import cn.hutool.core.lang.Assert;
-import com.myspringframwork.beans.core.io.Resource;
+import com.myspringframwork.core.io.Resource;
 
 import java.io.IOException;
 import java.io.InputStream;

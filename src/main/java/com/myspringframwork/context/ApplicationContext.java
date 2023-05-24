@@ -1,4 +1,4 @@
-package com.myspringframwork.beans.fectory.context;
+package com.myspringframwork.context;
 
 import com.myspringframwork.beans.fectory.ListableBeanFactory;
 

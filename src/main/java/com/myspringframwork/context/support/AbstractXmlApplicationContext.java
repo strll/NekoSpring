@@ -1,4 +1,4 @@
-package com.myspringframwork.beans.fectory.context.support;
+package com.myspringframwork.context.support;
 
 import com.myspringframwork.beans.fectory.support.beanFactory.impl.DefaultListableBeanFactory;
 import com.myspringframwork.beans.fectory.support.reader.XMLimpl.XmlBeanDefinitionReader;

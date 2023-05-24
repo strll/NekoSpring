@@ -1,9 +1,7 @@
 package com.myspringframwork.beans.fectory.support.reader;
 
-import com.myspringframwork.beans.BeansException;
-import com.myspringframwork.beans.core.io.Resource;
-import com.myspringframwork.beans.core.io.ResourceLoader;
-import com.myspringframwork.beans.core.io.ResourceLoaderImpl.DefaultResourceLoader;
+import com.myspringframwork.core.io.ResourceLoader;
+import com.myspringframwork.core.io.ResourceLoaderImpl.DefaultResourceLoader;
 import com.myspringframwork.beans.fectory.support.beanFactory.BeanDefinitionRegistry;
 
 public abstract class AbstractBeanDefinitionReader implements BeanDefinitionReader{

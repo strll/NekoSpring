@@ -1,11 +1,11 @@
-package com.myspringframwork.beans.fectory.context.support;
+package com.myspringframwork.context.support;
 
 import com.myspringframwork.beans.BeansException;
-import com.myspringframwork.beans.core.io.ResourceLoaderImpl.DefaultResourceLoader;
+import com.myspringframwork.core.io.ResourceLoaderImpl.DefaultResourceLoader;
 import com.myspringframwork.beans.fectory.ConfigurableListableBeanFactory;
 import com.myspringframwork.beans.fectory.config.BeanFactoryPostProcessor;
 import com.myspringframwork.beans.fectory.config.BeanPostProcessor;
-import com.myspringframwork.beans.fectory.context.ConfigurableApplicationContext;
+import com.myspringframwork.context.ConfigurableApplicationContext;
 
 import java.util.Map;
 
@@ -21,7 +21,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader i
         ConfigurableListableBeanFactory beanFactory = getBeanFactory();
         //获取bean实例之前的前置处理  修改核心类里面的BeanDefinition的信息
         invokeBeanFactoryPostProcessors(beanFactory);
-        //bean对象实例化之前注册  暂时没什么实际上的卵用(2023.4.3) 主要是把这个beanfactory删了再放进去
+        //bean对象实例化之前注册
         registerBeanPostProcessors(beanFactory);
         // 实例化单例的bean对象
         beanFactory.preInstantiateSingletons();

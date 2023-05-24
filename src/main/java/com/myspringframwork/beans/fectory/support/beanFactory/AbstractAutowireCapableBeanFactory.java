@@ -1,17 +1,21 @@
 package com.myspringframwork.beans.fectory.support.beanFactory;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.StrUtil;
 import com.myspringframwork.beans.BeansException;
 import com.myspringframwork.beans.PropertyValue;
 import com.myspringframwork.beans.PropertyValues;
+import com.myspringframwork.beans.fectory.InitializingBean;
 import com.myspringframwork.beans.fectory.config.AutowireCapableBeanFactory;
 import com.myspringframwork.beans.fectory.config.BeanDefinition;
 import com.myspringframwork.beans.fectory.config.BeanPostProcessor;
 import com.myspringframwork.beans.fectory.config.BeanReference;
 import com.myspringframwork.beans.fectory.support.instantiation.Impl.CglibSubclassingInstantiationStrategy;
 import com.myspringframwork.beans.fectory.support.instantiation.InstantiationStrategy;
+import javafx.fxml.Initializable;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 
 public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFactory implements AutowireCapableBeanFactory {
     //默认使用cglib的方式创建bean对象的实例
@@ -26,12 +30,39 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
                 bean = createBeanInstance(beanDefinition, beanName, null);
                 //给bean填充属性
                 applyPropertyValues(beanName, bean, beanDefinition);
+
             } catch (Exception e) {
                 throw new BeansException("Instantiation of bean failed", e);
             }
 
             registerSingleton(beanName, bean);
             return bean;
+    }
+
+    private Object initializeBean(String beanName,Object bean,BeanDefinition beanDefinition){
+        Object wrappedBean = applyBeanPostProcessorsBeforeInitialization(bean, beanName);
+        try{
+            invokeInitMethods(beanName,bean,beanDefinition);
+        } catch (Exception e) {
+            throw new BeansException("Invocation of init method of bean ["+beanName+"]failed expection is in com/myspringframwork/beans/fectory/support/beanFactory/AbstractAutowireCapableBeanFactory.java",e);
+        }
+        Object o = applyBeanPostProcessorsAfterInitialization(bean, beanName);
+        return o;
+    }
+
+    private void invokeInitMethods(String beanName,Object bean,BeanDefinition beanDefinition) throws Exception{
+            if (bean instanceof InitializingBean){
+               ((InitializingBean) bean).afterPropertiesSet();
+            }
+            //避免二次销毁
+        String initMethodName = beanDefinition.getInitMethodName();
+            if (StrUtil.isNotEmpty(initMethodName)){
+                Method method = beanDefinition.getBeanClass().getMethod(initMethodName);
+                if (null==method){
+                    throw new BeansException("can`t find an init method nameed{"+initMethodName+"}on bean with name{"+beanName+"}"+"this exception is in com/myspringframwork/beans/fectory/support/beanFactory/AbstractAutowireCapableBeanFactory.java");
+                }
+                method.invoke(bean);
+            }
     }
 
     @Override

@@ -1,6 +1,6 @@
-package com.myspringframwork.beans.core.io.ResourceImpl;
+package com.myspringframwork.core.io.ResourceImpl;
 
-import com.myspringframwork.beans.core.io.Resource;
+import com.myspringframwork.core.io.Resource;
 
 import java.io.File;
 import java.io.FileInputStream;

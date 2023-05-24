@@ -50,4 +50,5 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry i
     protected abstract Object createBean(String beanName,BeanDefinition beanDefinition) throws BeansException;
 
     protected abstract Object createBean(String beanName, BeanDefinition beanDefinition, Object[] args) throws BeansException;
+   // protected abstract Object  createBeanInstance(String beanName, BeanDefinition beanDefinition, Object[] args) throws BeansException;
 }

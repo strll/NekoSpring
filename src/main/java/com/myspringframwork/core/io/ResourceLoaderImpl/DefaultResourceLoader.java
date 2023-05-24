@@ -1,11 +1,11 @@
-package com.myspringframwork.beans.core.io.ResourceLoaderImpl;
+package com.myspringframwork.core.io.ResourceLoaderImpl;
 
 import cn.hutool.core.lang.Assert;
-import com.myspringframwork.beans.core.io.Resource;
-import com.myspringframwork.beans.core.io.ResourceImpl.ClassPathResource;
-import com.myspringframwork.beans.core.io.ResourceImpl.FileSystemResource;
-import com.myspringframwork.beans.core.io.ResourceImpl.UrlResource;
-import com.myspringframwork.beans.core.io.ResourceLoader;
+import com.myspringframwork.core.io.Resource;
+import com.myspringframwork.core.io.ResourceImpl.ClassPathResource;
+import com.myspringframwork.core.io.ResourceImpl.FileSystemResource;
+import com.myspringframwork.core.io.ResourceImpl.UrlResource;
+import com.myspringframwork.core.io.ResourceLoader;
 
 import java.net.MalformedURLException;
 import java.net.URL;

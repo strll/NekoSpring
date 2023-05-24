@@ -5,11 +5,11 @@ import bean.UserService;
 import cn.hutool.core.io.IoUtil;
 import com.myspringframwork.beans.PropertyValue;
 import com.myspringframwork.beans.PropertyValues;
-import com.myspringframwork.beans.core.io.Resource;
-import com.myspringframwork.beans.core.io.ResourceLoaderImpl.DefaultResourceLoader;
+import com.myspringframwork.core.io.Resource;
+import com.myspringframwork.core.io.ResourceLoaderImpl.DefaultResourceLoader;
 import com.myspringframwork.beans.fectory.config.BeanDefinition;
 import com.myspringframwork.beans.fectory.config.BeanReference;
-import com.myspringframwork.beans.fectory.context.support.ClassPathXmlApplicationContext;
+import com.myspringframwork.context.support.ClassPathXmlApplicationContext;
 import com.myspringframwork.beans.fectory.support.beanFactory.impl.DefaultListableBeanFactory;
 import com.myspringframwork.beans.fectory.support.reader.XMLimpl.XmlBeanDefinitionReader;
 
